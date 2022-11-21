@@ -1,6 +1,6 @@
 # Microservices with Docker and Kubernetes
 
-![Microservices](images\microservices-diagram.png)
+![Microservices](images/microservices-diagram.png)
 
 ## Microservices
 

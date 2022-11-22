@@ -49,10 +49,14 @@ Kubernetes is a portable, extensible, open-source platform for managing containe
 
 1. Download the Docker Desktop Installer from [here](https://hub.docker.com/editions/community/docker-ce-desktop-windows).
 2. Run the installer and follow the instructions.
-3. Once the installation is complete, open the Docker Desktop application.
-4. Install WSL 2 backend by following the instructions [here](https://docs.microsoft.com/en-us/windows/wsl/install-win10).
+3. Install WSL 2 backend by following the instructions [here](https://docs.microsoft.com/en-us/windows/wsl/install-win10).
+4. Once the installation is complete, open the Docker Desktop application.
+5. Restart your computer.
 
-### Alias
+### Alias for Docker
+
+1. Open the Git Bash as an administrator.
+2. Run the following command to create an alias for docker.
 
 ```bash
 alias docker="winpty docker"
@@ -69,4 +73,42 @@ docker ps -a
 
 # List all images
 docker images
+
+# Build an image
+docker build -t <image-name>
+
+# Remove an image
+docker rmi <image-id>
+
+# Remove all images
+docker rmi $(docker images -q)
+
+# Run a container
+docker run -p <host-port>:<container-port> <image-name>
+
+# Run a container in detached mode
+docker run -d -p <host-port>:<container-port> <image-name>
+
+# Enter a container
+docker exec -it <container-id> bash
+
+# Stop a container
+docker stop <container-id>
+
+# Remove a container
+docker rm <container-id>
+
+# Remove all containers
+docker rm $(docker ps -a -q)
+
+# See the logs of a container
+docker logs <container-id>
+```
+
+## dock push to docker hub
+
+```bash
+docker login
+docker tag <image-id> <docker-hub-username>/<image-name>
+docker push <docker-hub-username>/<image-name>
 ```

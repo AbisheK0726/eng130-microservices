@@ -112,6 +112,18 @@ docker logs <container-id>
 
 ### Docker push image to Docker Hub
 
+Commit the changes to docker hub
+
+```bash
+docker commit <container-id> <docker-hub-username>/<image-name>
+```
+
+Push the image to docker hub
+
+```bash
+docker push <docker-hub-username>/<image-name>
+```
+
 ### Dockerfile
 
 ```dockerfile
@@ -135,4 +147,61 @@ Run the following commands to build and run the image
 ```bash
 # Build an image
 docker build -t <image-name> .
+
+# Run a container
+docker run -p <host-port>:<container-port> <image-name>
 ```
+
+### Setup NodeApp on Docker via AWS
+
+1. Create an EC2 instance with Node App AMI.
+2. SSH into the instance.
+3. Run the following commands to install Docker
+
+```bash
+# Update the apt package index and install docker
+sudo apt-get update
+curl -fsSL https://get.docker.com -o get-docker.sh
+sudo snap install docker
+```
+
+Check the docker version
+
+```bash
+docker --version
+```
+
+4. Create a Dockerfile in working directory of the app folder and add the following content
+
+```dockerfile
+FROM nginx
+LABEL MAINTAINER=aneese-docker-app
+COPY app /home/
+COPY environment /home/
+EXPOSE 80
+EXPOSE 3000
+RUN apt-get update
+RUN apt-get install -y
+RUN apt-get install software-properties-common -y
+RUN apt-get install npm -y
+CMD ["nginx", "-g", "daemon off;"]
+WORKDIR /home/app
+RUN npm install
+CMD ["npm", "start"]
+```
+
+5. Build the image
+
+```bash
+docker build -t <image-name> .
+```
+
+6. Run the container
+
+```bash
+docker run -p <host-port>:<container-port> <image-name>
+```
+
+7. Visit the public IP of the instance to see the app running.
+
+8. Push the image to Docker Hub

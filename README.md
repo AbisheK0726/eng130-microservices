@@ -205,3 +205,46 @@ docker run -p <host-port>:<container-port> <image-name>
 7. Visit the public IP of the instance to see the app running.
 
 8. Push the image to Docker Hub
+
+### Docker MongoDB
+
+1. Create a Dockerfile in working directory of the app folder and add the following content
+
+```dockerfile
+FROM mongo:latest
+
+WORKDIR /usr/src/db/
+
+COPY ./mongod.conf /etc/
+
+EXPOSE 27017
+
+CMD ["mongod"]
+```
+
+### Docker Compose
+
+Dockers compose is a tool for defining and running multi-container Docker applications. With Compose, you use a YAML file to configure your application’s services. Then, with a single command, you create and start all the services from your configuration.
+
+1. Create a docker-compose.yml file in the working directory of the app folder and add the following content
+
+```yml
+services:
+  db:
+    image: mongo
+    # Mapping of container port to host
+    ports:
+      - "27017:27017"
+
+
+  app:
+  # Path to Dockerfile
+    build: ./app
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      - DB_HOST=mongodb://localhost:27017/posts
+    depends_on:
+      - db
+```

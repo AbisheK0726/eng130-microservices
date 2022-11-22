@@ -43,6 +43,11 @@ Kubernetes is an open-source system for automating deployment, scaling, and mana
 
 Kubernetes is a portable, extensible, open-source platform for managing containerized workloads and services, that facilitates both declarative configuration and automation. It has a large, rapidly growing ecosystem. Kubernetes services, support, and tools are widely available.
 
+## Virtualization vs Containerization
+
+![Virtualization vs Containerization](images/virtualization-vs-containerization.png)
+
+
 ## Docker Setup
 
 ### Docker Installation - Windows
@@ -56,7 +61,7 @@ Kubernetes is a portable, extensible, open-source platform for managing containe
 ### Alias for Docker
 
 1. Open the Git Bash as an administrator.
-2. Run the following command to create an alias for docker.
+2. Run the following command to create an alias for docker
 
 ```bash
 alias docker="winpty docker"
@@ -105,10 +110,29 @@ docker rm $(docker ps -a -q)
 docker logs <container-id>
 ```
 
-## dock push to docker hub
+### Docker push image to Docker Hub
+
+### Dockerfile
+
+```dockerfile
+# Specify a base image and tag
+FROM nginx
+LABEL MAINTAINER=abishek726
+
+# Copy files from the host to the container
+# COPY <source> <destination>
+COPY index.html /usr/share/nginx/html
+
+# Port to expose
+EXPOSE 80
+
+# Run a command
+CMD ["nginx", "-g", "daemon off;"]
+```
+
+Run the following commands to build and run the image
 
 ```bash
-docker login
-docker tag <image-id> <docker-hub-username>/<image-name>
-docker push <docker-hub-username>/<image-name>
+# Build an image
+docker build -t <image-name> .
 ```

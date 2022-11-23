@@ -45,8 +45,15 @@ Kubernetes is a portable, extensible, open-source platform for managing containe
 
 ## Virtualization vs Containerization
 
-![Virtualization vs Containerization](images/virtualization-vs-containerization.png)
+![Virtualization vs Containerization](images/containers-vs-virtual-machines.jpg)
 
+| Virtualization | Containerization |
+| --- | --- |
+| **Virtualization** is a method of partitioning a physical server into multiple servers, called virtual machines (VMs). Each VM acts like a separate physical server and has its own operating system (OS), memory, CPU, and storage. | **Containerization** is a method of running multiple isolated, lightweight Linux containers on a single control host. Each container is a standard unit of software that packages up code and all its dependencies so the application runs quickly and reliably from one computing environment to another. |
+| Since each VM has its own OS, it requires more resources than containers. | Containers are lightweight and share the OS kernel with other containers, so they require fewer resources than VMs. |
+| Virtualization is a hardware-based technology. | Containerization is a software-based technology. |
+| Startup time is slow. | Startup time is fast. |
+| Size is large. | Size is small. |
 
 ## Docker Setup
 
@@ -172,6 +179,9 @@ docker --version
 ```
 
 4. Create a Dockerfile in working directory of the app folder and add the following content
+
+* Install niginx and copy the index.html file to the nginx folder and expose port 80
+* Install node and move the working directory to the app folder and install the dependencies and start the app
 
 ```dockerfile
 FROM nginx

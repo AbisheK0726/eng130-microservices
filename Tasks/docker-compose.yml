@@ -1,0 +1,23 @@
+services:
+# Create a new service for the database
+  db:
+    container_name: db
+    # Use the official image for the database
+    image: mongo:4.0.4
+    # Mapping of container port to host
+    ports:
+      - "27017:27017"
+
+# Create a new service for the application
+  app:
+    container_name: app
+    # Path to Dockerfile
+    build: ./app
+    restart: always
+    ports:
+      - "3000:3000"
+    # Set the environment variables
+    environment:
+      - DB_HOST=mongodb://db:27017/posts
+    depends_on:
+      - db

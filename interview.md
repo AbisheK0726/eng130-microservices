@@ -31,3 +31,29 @@ RUN npm install -g npm@7.20.6
 Copy --from=app /usr/src/app /usr/src/app
 EXPOSE 3000
 CMD ["node", "app.js"]
+
+
+# Version of Docker Compose
+version: "1.0"
+services:
+  db:
+    image: mongo
+    # Mapping of container port to host
+    ports:
+      - "27017:27017"
+      # Mount volume 
+    volumes:
+      - "db:/data/db"
+
+  app:
+  # Path to Dockerfile 
+    build: ./app/app
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      - DB_HOST=mongodb://db:27017/posts
+    depends_on:
+      - db
+
+```
